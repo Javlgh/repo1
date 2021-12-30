@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>论文选师系统</title>
+    <link rel="stylesheet" type="text/css" href="css/shouye.css"/>
+    <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+
+
+        /*  $(function () {
+
+
+              $("input[type='radio']").on("click",function () {
+                  if($("input[id='admin']:checked").val()=="admin"){
+                      let username=$("#username").val()
+                      $("#admin").click(function(){
+                          if (username==null || username==""){
+                              alert(username);
+                              $("#spanMsg").html("请填写账户")
+                          }else {
+                          $.ajax({
+                              url:"/admin/tutor/isAdmin/"+username,
+                              success:function (data) {
+                                  if(data.data==1){
+                                      $("#spanMsg").html("");
+                                  }else{
+                                      $("#spanMsg").html("该账户非管理员账户")
+                                  }
+                              }
+                          })
+                               }
+
+                      });
+                      // $("#sub").click(function(){
+                      //     let spanMsg=$("#spanMsg").val()
+                      //     if(spanMsg!=""){
+                      //             alert("0      ");
+                      //     }else{
+                      //         alert("spanMsg+++++++")
+                      //         let tutorId=$("#username").val()
+                      //         let pwd=$("#login_pwd").val()
+                      //         /!*
+                      //         * {"code":200,"message":"操作成功","data":
+                      //         * {"tutorText":null,"jobName":"教授","tutorPwd":"123","tutorId":888,"tutorName":"李月辉","tutorStudentJudge":0,"work":"班主任","tutorJudge":"0","adminJudge":1,"createTime":null,"updateTime":null,"updater":null,"studentSize":null}}
+                      //         *
+                      //         * *!/
+                      //         $.ajax({
+                      //             url:"/admin/tutor/login?tutorId="+tutorId+"&pwd="+pwd,
+                      //             dataType:"json",
+                      //             type:"GET",
+                      //             success:function (data) {
+                      //                 if(data.message=="操作成功"){
+                      //                     alert("登陆成功")
+                      //                 }
+                      //             }
+                      //         })
+                      //     }
+                      // });
+                  }
+                  if($("input[id='student']:checked").val()=="student"){
+                      $("#spanMsg").html("");
+                      alert("学生...");
+                  }
+
+                  if($("input[id='teacher']:checked").val()=="teacher"){
+                      $("#spanMsg").html("");
+                      alert("教师...");
+                  }
+              })
+          })*/
+        //校验姓名
+        //邮件非空
+        function checkName() {
+            //1.获取姓名
+            var name = $("#username").val();
+            //2.定义正则
+            var reg_name = /^\s*$/g;
+            //3.判断
+            var flag = reg_name.test(name);
+            if (!flag) {
+                $("#spanMsg").html("")
+                $("#username").css("border", "");
+            } else {
+                $("#spanMsg").html("帐号不能为空")
+                $("#username").css("border", "1px solid pink");
+            }
+            return !flag;
+        }
+
+        function checkPwd() {
+            //1.获取密码
+            var pwd = $("#login_pwd").val();
+            //2.定义正则
+            var log_pwd = /^\s*$/g;
+            //3.判断
+            var flag = log_pwd.test(pwd);
+            if (!flag) {
+                $("#spanMsg").html("")
+                $("#login_pwd").css("border", "");
+            } else {
+                $("#spanMsg").html("密码不能为空")
+                $("#login_pwd").css("border", "1px solid pink");
+            }
+            return !flag;
+        }
+
+        $(function () {
+            $("#login_form").submit(function () {
+                if (checkName() && checkPwd()) {
+                    //校验通过发送Ajax
+                    let tutorId=$("#username").val()
+                    let pwd=$("#login_pwd").val()
+                    $.ajax({
+                        url: "/admin/tutor/login?tutorId=" + tutorId + "&pwd=" + pwd,
+                        dataType: "json",
+                        type: "GET",
+                        success: function (data) {
+                            if (data.message == "操作成功") {
+                                //登录成功
+                                alert("登陆成功")
+                            }else{
+                                //登录失败
+                            }
+                        }
+                    })
+                }
+
+            });
+            //当某个组件失去焦点时，调用对应的校验方法
+            $("#username").blur(checkName);
+            $("#login_pwd").blur(checkPwd);
+        });
+
+
+    </script>
+
+</head>
+<body>
+<div class="shouye">
+
+    <div class="table">
+
+        <h2>用户登录</h2>
+        <span id="spanMsg"></span>
+        <form action="" method="GET" id="login_form">
+            <table>
+                <tr>
+                    <td>帐号</td>
+                    <td><input type="text" name="username" id="username" class="A"/></td>
+                </tr>
+                <tr>
+                    <td>密码</td>
+                    <td><input type="password" name="login_pwd" id="login_pwd" class="A"/></td>
+                </tr>
+                <tr>
+                    <td>身份</td>
+
+                    <td><input type="radio" name="shenfen" value="admin" id="admin">&nbsp;管理员&nbsp;
+                        <input type="radio" name="shenfen" value="student" id="student">&nbsp;学生&nbsp;
+                        <input type="radio" name="shenfen" value="teacher" id="teacher">&nbsp;老师&nbsp;
+
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="button" value="登录" id="sub" class="button"/>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+
+    </div>
+</div>
+<!--<script type="text/javascript">
+    var text = document.getElementById("text");
+    text.onfocus = function () {
+        console.log('已经获取焦点');
+        this.value = "";
+    }
+    text.onblur = function () {
+        console.log('已失去焦点');
+        if (this.value == '') {
+            this.value = '输入姓名';
+        } else {
+            this.Style.color = "black"
+        }
+    }
+</script>-->
+</body>
+</html>
