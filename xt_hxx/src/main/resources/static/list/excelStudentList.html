@@ -1,0 +1,102 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生选题系统</title>
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap-theme.css" rel="stylesheet">
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="../js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body{
+            background-color: #34b8ad;
+        }
+        .box{
+            border: 1px solid transparent;
+            border-radius: 3px;
+            width: 1200px;
+            background-color: white;
+            margin: 100px auto;
+        }
+        .table{
+            border: 1px solid black;
+            border-radius: 3px;
+            margin: 0 auto;
+            width: 1000px;
+            margin-top: 50px;
+            text-align: center;
+
+        }
+        .table th,td{
+            border: 1px solid black;
+
+        }
+        .button{
+            margin: 10px 0;
+            text-align: center;
+        }
+        .button a{
+            width: 140px;
+            height: 40px;
+            background-color: white;
+            display: inline-block;
+            text-decoration: none;
+            background-color: #9da0a0;
+            color: black;
+            line-height: 40px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+
+        }
+        .button a:hover{
+            background-color: #ff6700;
+        }
+        .table tr:hover{
+            background-color: #e5e4e2;
+        }
+        .table a{
+            display: inline-block;
+            width: 50px;
+            height: 20px;
+            background-color: white;
+            border: 1px solid transparent;
+            border-radius: 5px;
+
+        }
+        .table a:hover{
+            background-color: #cce8ff;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <table  id="table" class="table" cellspacing="0" >
+        <tr><th>序号</th><th>学院</th><th>专业</th><th>原班级</th><th>班级名</th><th>学生学号</th>
+            <th>学生姓名</th><th>性别</th><th>联系方式</th><th>导员</th>
+            <th>选题方向</th><th>毕设题目</th><th>毕设导师</th><th colspan="1">操作</th></tr>
+        <tr th:each="c:${commonStudentExcel}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.college}"></td>
+            <td th:text="${c.major}"></td>
+            <td th:text="${c.oldClassName}"></td>
+            <td th:text="${c.className}"></td>
+            <td th:text="${c.studentId}"></td>
+            <td th:text="${c.studentName}"></td>
+            <td th:text="${c.studentSex}"></td>
+            <td th:text="${c.studentPhone}"></td>
+            <td th:text="${c.counselor}"></td>
+            <td th:text="${c.direction}"></td>
+            <td th:text="${c.topic}"></td>
+            <td th:text="${c.tutorName}"></td>
+            <td ><a th:href="@{/admin/selectExcelByStudentId(studentId=${c.studentId})}">修改</a></td>
+        </tr>
+    </table>
+    <div class="button">
+        <a href="/admin/thressFp" >三轮一键随机分配</a>
+        <a href="/admin/findExcelFinal" role="button">一键导出excel表格</a>
+    </div>
+</div>
+
+</body>
+</html>

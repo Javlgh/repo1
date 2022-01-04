@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lgh.modules.admin.mapper.SelectedTopicMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lgh.modules.admin.model.SelectedTopic">
+        <id column="id" property="id" />
+        <result column="student_id" property="studentId" />
+        <result column="tutor_name" property="tutorName" />
+        <result column="topic" property="topic" />
+        <result column="direction" property="direction" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="sel_updater" property="selUpdater" />
+    </resultMap>
+
+    <select id="findExcelFinal" resultType="com.lgh.modules.admin.model.StudentExcel">
+        select
+                stu.student_id,stu.student_name,student_sex,student_phone,stu.major,stu.college,con.class_name,
+                con.old_class_name,cte.new_teacher,cte.old_teacher,cte.counselor,sel.topic,sel.direction,sel.tutor_name
+            from student stu
+            join class_o_n con on con.student_id=stu.student_id
+            join class_teacher cte on cte.student_id=stu.student_id
+            join selected_topic sel on sel.student_id=stu.student_id
+            where stu.pd=1;
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生选题系统</title>
+    <style type="text/css">
+        body{
+            background-color: #34b8ad;
+        }
+        .box{
+            border: 1px solid transparent;
+            border-radius: 3px;
+            background-color: white;
+            margin: 100px auto;
+        }
+        .table{
+            border: 1px solid black;
+            border-radius: 3px;
+            margin: 0 auto;
+            margin-top: 50px;
+            margin-bottom: 40px;
+            text-align: center;
+
+        }
+        .table th,td{
+            border: 1px solid black;
+
+        }
+        .button{
+            margin: 10px 0;
+            text-align: center;
+        }
+        .button {
+            width: 100px;
+            height: 20px;
+            background-color: white;
+            display: inline-block;
+            text-decoration: none;
+            background-color: white;
+            color: black;
+            line-height: 20px;
+            border: 1px solid cornflowerblue;
+            border-radius: 5px;
+
+        }
+        .button:hover{
+            background-color: cornflowerblue;
+        }
+        .table input{
+            border: 1px solid powderblue ;
+        }
+        .table input:hover{
+            border: 1px solid cornflowerblue ;
+        }
+    </style>
+</head>
+<body>
+<div class="box" >
+<form action="/admin/adminUpdateStudentById">
+    <table class="table" cellspacing="0">
+        <tr>
+            <td>学院</td>
+            <td><input type="text" name="college" th:value="${student.college}"></td></tr>
+        <tr>
+            <td>专业</td>
+            <td><input type="text" name="major" th:value="${student.major}"></td></tr>
+        <tr>
+            <td>原班级</td>
+            <td><input type="text" name="oldClass" th:value="${student.oldClass}"></td></tr>
+        <tr>
+            <td>班级名</td>
+            <td><input type="text" name="newClass" th:value="${student.newClass}"></td></tr>
+        <tr>
+            <td>学生学号</td>
+            <td><input type="text" name="studentId" readonly="readonly" th:value="${student.studentId}"></td></tr>
+        <tr>
+            <td>学生姓名</td>
+            <td><input type="text" name="studentName" th:value="${student.studentName}"></td></tr>
+        <tr>
+            <td>性别</td>
+            <td><input type="text" name="studentSex" th:value="${student.studentSex}"></td></tr>
+        <tr>
+            <td>联系方式</td>
+            <td><input type="text" name="studentPhone" th:value="${student.studentPhone}"></td></tr>
+        <tr>
+            <td>导员</td>
+            <td><input type="text" name="dy" th:value="${student.dy}"></td></tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="修改"  class="button" >
+            </td></tr>
+    </table>
+</form>
+</div>
+</body>
+</html>

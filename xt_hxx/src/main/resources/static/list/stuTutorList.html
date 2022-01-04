@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+
+
+    <title>导师选择系统</title>
+    <meta name="description" content="导师选择系统">
+    <meta name="keywords" content="导师选择系统">
+
+
+
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    
+
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../plugins/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="../plugins/iCheck/square/blue.css">
+    <link rel="stylesheet" href="../plugins/morris/morris.css">
+    <link rel="stylesheet" href="../plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="../plugins/treeTable/jquery.treetable.css">
+    <link rel="stylesheet" href="../plugins/treeTable/jquery.treetable.theme.default.css">
+    <link rel="stylesheet" href="../plugins/select2/select2.css">
+    <link rel="stylesheet" href="../plugins/colorpicker/bootstrap-colorpicker.min.css">
+    <link rel="stylesheet" href="../plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/ionslider/ion.rangeSlider.css">
+    <link rel="stylesheet" href="../plugins/ionslider/ion.rangeSlider.skinNice.css">
+    <link rel="stylesheet" href="../plugins/bootstrap-slider/slider.css">
+    <link rel="stylesheet" href="../plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
+
+    <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+<!--界定学生是否选定-->
+    <script>
+        $(function () {
+            $("#SS").click(function () {
+                alert("sfsdf")
+            })
+            let table= $("#table")
+            let sss="<tr><th>学号</th><th>教师姓名</th>\n" +
+                "            <th>课题方向</th><th>课题名称</th><th>状态</th><th>操作</th></tr>";
+            $.ajax({
+                url:"/student/selectOne",
+                dataType: "json",
+                type: "get",
+                success: function (data) {
+                    //{"code":200,"message":"操作成功","data":
+                    // {"id":5,"pd":1,"studentId":"123","tutorName":"李月辉","topic":"未知","direction":"未知","createTime":"2021-11-09T13:44:19.000+00:00","updateTime":null,"selUpdater":null}}
+                    // alert(data.data.studentId)
+                    let pd="待处理";
+                    let sel=data.data
+                    if(sel.pd==1){
+                        pd="已完成"
+                        sss+="<tr><th>"+sel.studentId+"</th><th>"+sel.tutorName+"</th><th>"+sel.topic+"</th>\n" +
+                            "<th>"+sel.direction+"</th><th>"+pd+"</th><th>不可操作</th></th></tr>"
+                    }
+                    if(sel.pd==0){
+                        let hrefs=""
+                        sss+="<tr><th>"+sel.studentId+"</th><th>"+sel.tutorName+"</th><th>"+sel.topic+"</th>\n" +
+                            "<th>"+sel.direction+"</th><th>"+pd+"</th><th><a href='/student/deleteSelectedTopic'>取消</a></th></tr>"
+                    }
+
+                    // alert(porp)
+                    table.html(sss)
+                }
+
+            })
+
+
+        })
+    </script>
+<!--界定学生是否选定-->
+</head>
+
+<body class="hold-transition skin-purple sidebar-mini">
+
+<!--body中的内容-->
+<div class="wrapper"  >
+
+    <!-- 页面头部 -->
+    <header class="main-header">
+
+
+        <!--Left Logo -->
+        <a href="#" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b></b></span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>导师选择</b>系统</span>
+        </a>
+
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button  侧边栏缩放按钮-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+
+
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="../img/006CHHsBly1gw94vhookrj30u00u0ndq.jpg" class="user-image" alt="User Image">
+                            <span class="hidden-xs" th:text="${session.student.studentName}"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="../img/006CHHsBly1gw94vhookrj30u00u0ndq.jpg" class="img-circle" alt="User Image">
+
+                                <p th:text="${session.student.studentName}">
+
+                                    <small> </small>
+                                </p>
+                            </li>
+                            <!-- Menu Body
+                    <li class="user-body">
+                        <div class="row">
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Followers</a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Sales</a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Friends</a>
+                            </div>
+                        </div>
+                    </li>-->
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-right">
+                                    <a href="javascript:parent.window.location.href= '/login.html ';" class="btn btn-default btn-flat">注销</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- 页面头部 /-->
+
+    <!-- 导航侧栏 -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel  侧边栏用户面板-->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="../img/006CHHsBly1gw94vf8hnxj30u00u0tnn.jpg" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p th:text="${session.student.studentName}"></p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <!--<form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="搜索...">
+            <span class="input-group-btn">
+            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+    </form>-->
+            <!-- /.search form -->
+
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">菜单</li>
+
+                <li id="admin-index"><a href="/student/studentStart"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
+                <!--课题选择-->
+                <li id=""><a href="#"><i class="fa fa-edit"></i> <span>导师选择</span></a></li>
+
+                <!--修改资料-->
+                <li id=""><a href="/student/findById"><i class="fa fa-adjust"></i> <span>修改资料</span></a></li>
+                <!-- 菜单 /-->
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- 导航侧栏 /-->
+
+    <!-- 内容区域 -->
+    <!-- @@master = admin-layout.html-->
+    <!-- @@block = content -->
+
+    <div class="content-wrapper" >
+
+        <!-- 内容头部 -->
+        <section class="content-header">
+            <h1>
+                导师选择
+                <small>数据列表</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a href="#">导师选择</a></li>
+            </ol>
+        </section>
+        <!-- 内容头部 /-->
+
+        <!-- 正文区域 -->
+        <section class="content">
+
+            <!-- .box-body -->
+            <div class="box box-primary" th:if="${session.student.pd}==0">
+                <div class="box-body" >
+                    <!--数据列表-->
+                    <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+                        <thead>
+                        <tr>
+                            <th class="text-center">导师<br>姓名</th>
+                            <th class="text-center">剩余<br>名额</th>
+                            <th class="text-center">职称</th>
+                            <th class="text-center">导师<br>简介</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="tutor:${tutorList.data.list}">
+                            <td th:text="${tutor.tutorName}"></td>
+                            <td th:text="${tutor.studentSize}"></td>
+                            <td th:text="${tutor.jobName}"></td>
+
+                            <td ><a th:href="@{/student/teacherDetails(tutorId=${tutor.tutorId})}">教师详情>></a> </td>
+                            <td  align="center"><a th:href="@{/student/selectTutor(tutorName=${tutor.tutorName})}">选择<br>导师</a></td>
+                            <!--js(if循环鼠标单击事件)-->
+                        </tr>
+                        </tbody>
+                        <!--
+                            <tfoot>
+                            <tr>
+                            <th>Rendering engine</th>
+                            <th>Browser</th>
+                            <th>Platform(s)</th>
+                            <th>Engine version</th>
+                            <th>CSS grade</th>
+                            </tr>
+                            </tfoot>-->
+                    </table>
+                    <!--数据列表/-->
+
+                </div >
+
+            </div>
+
+            <!--分页栏-->
+            <div class="box-footer" th:if="${session.student.pd}==0">
+                <div class="pull-left">
+                    <div class="form-group form-inline">
+                        第[[${tutorList.data.pageNum}]]页/共[[${tutorList.data.totalPage}]]页，共[[${tutorList.data.total}]]条数据。
+                    </div>
+                </div>
+                <div class="box-tools pull-right">
+                    <ul class="pagination">
+                        <li>
+                            <a th:href="@{/student/stuTutorList(pageNum=1,pageSize=12,junt=1)}" aria-label="Previous">首页</a>
+                        </li>
+                        <li><a th:href="@{/student/stuTutorList(pageNum=${tutorList.data.pageNum}-1,pageSize=12,junt=1)}" th:if="${tutorList.data.pageNum gt 0}">上一页</a></li>
+                        <li> <a th:href="@{/student/stuTutorList(pageNum=1,pageSize=12,junt=1)}" th:if="${tutorList.data.pageNum lt 0}">上一页</a></li>
+
+                        <li><a th:href="@{/student/stuTutorList(pageNum=${tutorList.data.pageNum}+1,pageSize=12,junt=1)}" th:if="${tutorList.data.pageNum lt tutorList.data.totalPage}">下一页</a></li>
+                        <li> <a th:href="@{/student/stuTutorList(pageNum=${tutorList.data.totalPage},pageSize=12,junt=1)}" th:if="${tutorList.data.pageNum ge tutorList.data.totalPage}">下一页</a></li>
+
+                        <li>
+                            <a th:href="@{/student/stuTutorList(pageNum=${tutorList.data.totalPage},pageSize=12,junt=1)}" aria-label="Next">尾页</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <!--分页栏-->
+
+
+
+
+
+
+
+
+
+<!--            -->
+            <!-- .box-body -->
+            <div class="box box-primary" th:if="${session.student.pd}==1">
+                <div class="box-body" th:if="${session.student.pd}==1">
+
+
+
+                    <!--数据列表-->
+                    <table id="table" class="table table-bordered table-striped table-hover dataTable">
+
+
+                    </table>
+                    <!--数据列表/-->
+
+                </div >
+
+            </div>
+
+
+
+<!--            -->
+
+
+
+
+
+
+
+        </section>
+        <!-- 正文区域 /-->
+
+    </div>
+
+
+    <!-- 正文区域 /-->
+
+
+    <!-- @@close -->
+    <!-- 内容区域 /-->
+
+    <!-- 底部导航 -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 1.0.1
+        </div>
+        <strong>Copyright &copy; 2021 <a href="#">哈尔滨信息工程学院</a>.</strong> All rights reserved.
+    </footer>
+    <!-- 底部导航 /-->
+
+</div>
+
+
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../plugins/jQueryUI/jquery-ui.min.js"></script>
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+<script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="../plugins/raphael/raphael-min.js"></script>
+<script src="../plugins/morris/morris.min.js"></script>
+<script src="../plugins/sparkline/jquery.sparkline.min.js"></script>
+<script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="../plugins/knob/jquery.knob.js"></script>
+<script src="../plugins/daterangepicker/moment.min.js"></script>
+<script src="../plugins/daterangepicker/daterangepicker.js"></script>
+<script src="../plugins/daterangepicker/daterangepicker.zh-CN.js"></script>
+<script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="../plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="../plugins/fastclick/fastclick.js"></script>
+<script src="../plugins/iCheck/icheck.min.js"></script>
+<script src="../plugins/adminLTE/js/app.min.js"></script>
+<script src="../plugins/treeTable/jquery.treetable.js"></script>
+<script src="../plugins/select2/select2.full.min.js"></script>
+<script src="../plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<script src="../plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.zh-CN.js"></script>
+<script src="../plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+<script src="../plugins/bootstrap-markdown/locale/bootstrap-markdown.zh.js"></script>
+<script src="../plugins/bootstrap-markdown/js/markdown.js"></script>
+<script src="../plugins/bootstrap-markdown/js/to-markdown.js"></script>
+<script src="../plugins/ckeditor/ckeditor.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="../plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="../plugins/chartjs/Chart.min.js"></script>
+<script src="../plugins/flot/jquery.flot.min.js"></script>
+<script src="../plugins/flot/jquery.flot.resize.min.js"></script>
+<script src="../plugins/flot/jquery.flot.pie.min.js"></script>
+<script src="../plugins/flot/jquery.flot.categories.min.js"></script>
+<script src="../plugins/ionslider/ion.rangeSlider.min.js"></script>
+<script src="../plugins/bootstrap-slider/bootstrap-slider.js"></script>
+<script src="../plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+<script src="../plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script>
+    $(document).ready(function() {
+        // 选择框
+        $(".select2").select2();
+
+        // WYSIHTML5编辑器
+        $(".textarea").wysihtml5({
+            locale: 'zh-CN'
+        });
+    });
+
+
+    // 设置激活菜单
+    function setSidebarActive(tagUri) {
+        var liObj = $("#" + tagUri);
+        if (liObj.length > 0) {
+            liObj.parent().parent().addClass("active");
+            liObj.addClass("active");
+        }
+    }
+
+
+    $(document).ready(function() {
+
+        // 激活导航位置
+        setSidebarActive("admin-datalist");
+
+        // 列表按钮
+        $("#dataList td input[type='checkbox']").iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            increaseArea: '20%'
+        });
+        // 全选操作
+        $("#selall").click(function() {
+            var clicks = $(this).is(':checked');
+            if (!clicks) {
+                $("#dataList td input[type='checkbox']").iCheck("uncheck");
+            } else {
+                $("#dataList td input[type='checkbox']").iCheck("check");
+            }
+            $(this).data("clicks", !clicks);
+        });
+    });
+</script>
+</body>
+
+</html>

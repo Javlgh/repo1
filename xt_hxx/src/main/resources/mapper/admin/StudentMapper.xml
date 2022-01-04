@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lgh.modules.admin.mapper.StudentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lgh.modules.admin.model.Student">
+        <id column="student_id" property="studentId" />
+        <result column="student_name" property="studentName" />
+        <result column="student_pwd" property="studentPwd" />
+        <result column="student_sex" property="studentSex" />
+        <result column="student_phone" property="studentPhone" />
+        <result column="major" property="major" />
+        <result column="pd" property="pd" />
+        <result column="college" property="college" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="student_updater" property="studentUpdater" />
+
+    </resultMap>
+
+
+    <select id="findExcelFinal" resultType="com.lgh.modules.admin.model.StudentExcel">
+       select stu.student_id,stu.student_name
+     ,stu.student_sex,stu.student_phone,stu.major,stu.college,stu.old_class as old_class_name,
+     stu.new_class as class_name ,stu.class_teacher_name,stu.old_teacher_class as old_teacher,
+     stu.dy as counselor,sel.direction,sel.tutor_name,sel.topic from student stu
+      join selected_topic sel on sel.student_id=stu.student_id
+      where stu.pd=1 and sel.pd=1
+    </select>
+    <select id="selectExcelByStudentId" resultType="com.lgh.modules.admin.model.StudentExcel">
+    select stu.student_id,stu.student_name
+     ,stu.student_sex,stu.student_phone,stu.major,stu.college,stu.old_class as old_class_name,
+     stu.new_class as class_name ,stu.class_teacher_name,stu.old_teacher_class as old_teacher,
+     stu.dy as counselor,sel.direction,sel.tutor_name,sel.topic from student stu
+      join selected_topic sel on sel.student_id=stu.student_id
+      where stu.pd=1 and sel.pd=1   and stu.student_id=#{studentId}
+    </select>
+<!--    <select id="findFinal" resultType="com.lgh.modules.admin.model.StudentExcel">-->
+<!--        select * from student s join selected_topic t on t.student_id=s.student_id  where s.pd=1 and t.pd=1-->
+<!--    </select>-->
+
+    <select id="findExcelFinalTutor" resultType="com.lgh.modules.admin.model.StudentExcel">
+     select stu.student_id,stu.student_name
+     ,stu.student_sex,stu.student_phone,stu.major,stu.college,stu.old_class as old_class_name,
+     stu.new_class as class_name ,stu.class_teacher_name,stu.old_teacher_class as old_teacher,
+     stu.dy as counselor,sel.direction,sel.tutor_name,sel.topic from student stu
+      join selected_topic sel on sel.student_id=stu.student_id
+      where stu.pd=1 and sel.pd=1   and sel.tutor_name=#{tutorName}
+    </select>
+    <select id="findExcelDFinalTutor" resultType="com.lgh.modules.admin.model.StudentExcel">
+     select stu.student_id,stu.student_name
+     ,stu.student_sex,stu.student_phone,stu.major,stu.college,stu.old_class as old_class_name,
+     stu.new_class as class_name ,stu.class_teacher_name,stu.old_teacher_class as old_teacher,
+     stu.dy as counselor,sel.direction,sel.tutor_name,sel.topic from student stu
+      join selected_topic sel on sel.student_id=stu.student_id
+      where stu.pd=1 and sel.pd=0   and sel.tutor_name=#{tutorName}
+    </select>
+    <select id="studentList" resultType="com.lgh.modules.admin.model.StudentImpExc">
+    select * from student;
+    </select>
+    <select id="listLike" resultType="com.lgh.modules.admin.model.Student">
+    select student_id,student_name,student_pwd,student_sex,
+    student_phone,major,pd,college,create_time,update_time,student_updater,
+    class_teacher_name,old_teacher_class,dy,new_class,old_class from student where 1=1
+        <if test='studentName!=null and studentName!=""'>
+            and student_name like #{studentName}
+        </if>
+        <if test='studentId!=null and studentId!=""'>
+            and student_id like #{studentId}
+        </if>
+    </select>
+
+</mapper>

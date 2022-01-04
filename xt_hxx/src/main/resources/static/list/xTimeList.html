@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生选题系统</title>
+    <style type="text/css">
+        body{
+            background-color: #34b8ad;
+        }
+        .box{
+            border: 1px solid transparent;
+            border-radius: 3px;
+            width: 1200px;
+            background-color: white;
+            margin: 100px auto;
+        }
+        .table{
+            border: 1px solid black;
+            border-radius: 3px;
+            margin: 0 auto;
+            width: 1000px;
+            margin-top: 20px;
+            text-align: center;
+
+        }
+        .table th,td{
+            border: 1px solid black;
+
+        }
+        .button{
+            margin: 10px 0;
+            text-align: center;
+        }
+        .button a{
+            width: 140px;
+            height: 40px;
+            background-color: white;
+            display: inline-block;
+            text-decoration: none;
+            background-color: #9da0a0;
+            color: black;
+            line-height: 40px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+
+        }
+        .button a:hover{
+            background-color: #ff6700;
+        }
+        .table tr:hover{
+            background-color: #e5e4e2;
+        }
+        .table a{
+            display: inline-block;
+            width: 50px;
+            height: 20px;
+            background-color: white;
+            border: 1px solid transparent;
+            border-radius: 5px;
+
+        }
+        .table a:hover{
+            background-color: #cce8ff;
+
+        }
+        .box h2{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>点击之后代表已经开始选题请勿在进行中二次点击</h2>
+    <table class="table" cellspacing="0">
+        <tr>
+            <th>开始时间</th>
+            <th th:text="${#dates.format(xTime.data.firstTime,'yyyy-MM-dd')}"></th>
+            <th rowspan="3"><a th:href="@{/timeForm.html}">修改</a></th>
+        </tr>
+        <tr>
+        <th>二轮时间</th>
+            <th th:text="${#dates.format(xTime.data.twoTime,'yyyy-MM-dd')}"></th>
+        </tr>
+        <tr>
+        <th>每位老师最多能带人数</th>
+            <th th:text="${xTime.data.studentSize}"></th>
+        </tr>
+    </table>
+<!--    <a href="/admin/startFirst"-->
+<div class="button">
+    <a th:href="@{/admin/startFirst}">开始第一轮</a>
+<a th:href="@{/admin/twoStart}">开始第二轮</a>
+</div>
+</div>
+</body>
+</html>

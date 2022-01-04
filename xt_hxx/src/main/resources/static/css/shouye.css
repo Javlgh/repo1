@@ -1,0 +1,59 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.shouye{
+	text-align: center;
+}
+
+body{
+	background-image: url(../img/bj1.png);
+	background-repeat: no-repeat;
+	background-color: #34b8ad;
+	background-size: cover;
+}
+.table{
+	width: 350px;
+	height: 300px;
+	background-color: #eaeced;
+	opacity: 0.8;
+	border: 1px solid white;
+	border-radius: 5px;
+	float: right;
+	margin-right: 200px;
+	margin-top: 200px;
+	text-align: center;
+
+
+}
+.table h2{
+	margin-top: 20px;
+
+}
+.table table td{
+	padding-left: 40px;
+	font-size: 12px;
+	padding-top: 10px;
+
+}
+.table .A{
+	width: 150px;
+	height: 20px;
+	border-radius: 3px;
+	border: paleturquoise solid;
+}
+
+.button{
+	width: 150px;
+	height: 30px;
+	background-color: #bdcefa;
+	border: 1px solid white;
+	border-radius: 3px;
+	opacity: 0.9;
+	color: white;
+	margin-left: 40px;
+}
+.button:hover{
+	background-color: blue;
+
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>导师选择系统</title>
+		<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+			body{
+			
+					background-size: cover;
+					background-color: #34b8ad;
+			}
+			.imgs{
+				text-align: center;
+			}
+			
+		</style>
+		<script type="text/javascript">
+		var number=0;
+			function fun(){
+				number++;
+				//判断number是否大于三
+				if(number>5){
+					number=0;
+				}
+			var img=document.getElementById("pic");
+			img.src="img/picture"+number+".jpg";
+			}
+			setInterval(fun,3000);
+			
+		</script>
+	</head>
+	<body>
+		<div class="imgs">
+			<img src="img/picture0.jpg"  id="pic" width="100%" />
+		</div>
+
+
+		</div>
+	</body>
+</html>

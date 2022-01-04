@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生选题系统</title>
+    <style type="text/css">
+        body{
+            background-color: #34b8ad;
+        }
+        .box{
+            border: 1px solid transparent;
+            border-radius: 3px;
+            width: 1200px;
+            background-color: white;
+            margin: 100px auto;
+        }
+        .table{
+            border: 1px solid black;
+            border-radius: 3px;
+            margin: 0 auto;
+            width: 1100px;
+            margin-bottom: 50px;
+            text-align: center;
+
+        }
+        .table th,td{
+            border: 1px solid black;
+
+        }
+        .button{
+
+            margin: 10px 0;
+            text-align: center;
+        }
+        .button a{
+            margin-top: 40px;
+            width: 140px;
+            height: 40px;
+            background-color: white;
+            display: inline-block;
+            text-decoration: none;
+            background-color: #9da0a0;
+            color: black;
+            line-height: 40px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+
+        }
+        .button a:hover{
+            background-color: #ff6700;
+        }
+        .table tr:hover{
+            background-color: #e5e4e2;
+        }
+        .table a{
+
+            display: inline-block;
+            width: 50px;
+            height: 20px;
+            background-color: white;
+            border: 1px solid transparent;
+            border-radius: 5px;
+
+        }
+        .table a:hover{
+            background-color: #cce8ff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div class="button"><a href="/admin/tutorList?junt=1">课题导师</a>
+        <a th:href="@{/importExcelTutor.html}">一键导入教师</a>&nbsp;<a th:href="@{/AdminSetting.html}">设置其他管理员</a></div>
+
+    <table class="table" cellspacing="0">
+        <tr><th>导师工号</th><th>导师姓名</th><th>教师工作</th><th>剩余名额</th>
+            <th>职称</th><th>导师简介</th><th>是否成为管理员</th></tr>
+        <tr th:each="tutor:${tutorList.data.list}">
+            <td th:text="${tutor.tutorId}"></td>
+            <td th:text="${tutor.tutorName}"></td>
+            <td th:text="${tutor.work}"></td>
+            <td th:text="${tutor.studentSize}"></td>
+            <td th:text="${tutor.jobName}"></td>
+            <td><a th:href="@{/admin/teacherDetails(tutorId=${tutor.tutorId})}">教师详情>></a></td>
+            <td th:if="${tutor.adminJudge}==1">是</td>
+            <td th:if="${tutor.adminJudge}==0">否</td>
+            <!--js(if循环鼠标单击事件)-->
+        </tr>
+        <tr>
+            <td colspan="7" >
+
+                <a th:href="@{/admin/tutorList(pageNum=1,pageSize=5,junt=1)}">首页</a>
+                <a th:href="@{/admin/tutorList(pageNum=${tutorList.data.pageNum}-1,pageSize=5,junt=1)}" th:if="${tutorList.data.pageNum gt 0}">上一页</a>
+                <a th:href="@{/admin/tutorList(pageNum=1,pageSize=5,junt=1)}" th:if="${tutorList.data.pageNum lt 0}">上一页</a>
+                <a th:href="@{/admin/tutorList(pageNum=${tutorList.data.pageNum}+1,pageSize=5,junt=1)}" th:if="${tutorList.data.pageNum lt tutorList.data.totalPage}">下一页</a>
+                <a th:href="@{/admin/tutorList(pageNum=${tutorList.data.totalPage},pageSize=5,junt=1)}" th:if="${tutorList.data.pageNum ge tutorList.data.totalPage}">下一页</a>
+                <a th:href="@{/admin/tutorList(pageNum=${tutorList.data.totalPage},pageSize=5,junt=1)}">尾页</a>
+                第[[${tutorList.data.pageNum}]]页/共[[${tutorList.data.totalPage}]]页，共[[${tutorList.data.total}]]条
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

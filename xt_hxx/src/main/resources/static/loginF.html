@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>学生选题系统</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.shouye{
+			text-align: center;
+		}
+
+		body{
+			background-image: url(../img/bj1.png);
+			background-repeat: no-repeat;
+			background-color: #34b8ad;
+			background-size: cover;
+		}
+		.table{
+			width: 350px;
+			height: 300px;
+			background-color: #eaeced;
+			opacity: 0.8;
+			border: 1px solid white;
+			border-radius: 5px;
+			float: right;
+			margin-right: 200px;
+			margin-top: 200px;
+			text-align: center;
+
+
+		}
+		.table h2{
+			margin-top: 20px;
+
+		}
+		.table table td{
+			padding-left: 40px;
+			font-size: 12px;
+			padding-top: 10px;
+
+		}
+		.table .A{
+			width: 150px;
+			height: 20px;
+			border-radius: 3px;
+			border: paleturquoise solid;
+		}
+
+		.button{
+			width: 150px;
+			height: 30px;
+			background-color: #bdcefa;
+			border: 1px solid white;
+			border-radius: 3px;
+			opacity: 0.9;
+			color: white;
+			margin-left: 40px;
+		}
+		.button:hover{
+			background-color: blue;
+
+		}
+
+	</style>
+	<script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(function () {
+			$("input#username").blur(function () {
+				$("div#tsdiv").html("")
+			})
+			$("input[type='radio']").on("click",function () {
+                   if($("input[id='admin']:checked").val()=="admin"){
+					   $("div#tsdiv").html("")
+					   $("#sub").click(function(){
+					           let tutorId=$("#username").val()
+					           let pwd=$("#login_pwd").val()
+						   if($("input#admin").prop('checked')) {
+							   $.ajax({
+								   url: "admin/login?tutorId=" + tutorId + "&pwd=" + pwd,
+								   dataType: "json",
+								   type: "get",
+								   success: function (data) {
+									   if (data.message == "操作成功") {
+										   alert("登陆成功")
+										   window.location.href="administrators.html";
+									   }else {
+										   $("div#tsdiv").html("密码错误或账号错误")
+									   }
+								   }
+							   })
+						   }
+
+					   });
+				   }
+			  });
+			$("input[type='radio']").on("click",function () {
+				if ($("input[id='student']:checked").val() == "student") {
+					$("div#tsdiv").html("")
+					$("#sub").click(function () {
+						let studentId = $("#username").val()
+							let pwd = $("#login_pwd").val()
+						if($("input#student").prop('checked')) {
+							$.ajax({
+								url: "student/login?studentId=" + studentId + "&pwd=" + pwd,
+								dataType: "json",
+								type: "get",
+								success: function (data) {
+									if (data.message == "操作成功") {
+										alert("登陆成功")
+										window.location.href="/student/studentStart"
+									}else {
+										$("div#tsdiv").html("密码错误或账号错误")
+									}
+								}
+							})
+						}
+
+					});
+				}
+			})
+
+			$("input[type='radio']").on("click",function () {
+				if ($("input[id='teacher']:checked").val() == "teacher") {
+					$("div#tsdiv").html("")
+					$("#sub").click(function () {
+						let spanMsg = $("#spanMsg").val()
+						let tutorId = $("#username").val()
+							let pwd = $("#login_pwd").val()
+						if($("input#teacher").prop('checked')) {
+							$.ajax({
+								url: "tutor/tutorLogin?tutorId=" + tutorId + "&pwd=" + pwd,
+								dataType: "json",
+								type: "get",
+								success: function (data) {
+									if (data.message == "操作成功") {
+										window.location.href="teacher.html"
+										alert("登陆成功")
+									}else {
+										$("div#tsdiv").html("密码错误或账号错误")
+									}
+								}
+							})
+						}
+					});
+				}
+			})
+		})
+
+	</script>
+
+</head>
+<body>
+<div class="shouye">
+
+	<div class="table">
+
+		<h2>用户登录</h2>
+		<span id="spanMsg"></span>
+		<form action="" id="login_form">
+			<table>
+				<tr>
+					<td>帐号</td>
+					<td><input type="text" name="username" id="username" class="A"/></td>
+				</tr>
+				<tr>
+					<td>密码</td>
+					<td><input type="password" name="login_pwd" id="login_pwd" class="A"/></td>
+				</tr>
+				<tr>
+					<td>身份</td>
+					<td>
+						<input type="radio" name="shenfen" value="admin" id="admin">&nbsp; 管理员&nbsp;
+						<input type="radio" name="shenfen" value="student" id="student" >&nbsp;学生&nbsp;
+						<input type="radio" name="shenfen" value="teacher" id="teacher">&nbsp;老师&nbsp;
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2" align="center">
+						<input type="button" value="登录" id="sub" class="button"/>
+					</td>
+				</tr>
+
+			</table>
+		</form>
+		<div align="center" id="tsdiv"></div>
+	</div>
+</div>
+<!--<script type="text/javascript">
+    var text = document.getElementById("text");
+    text.onfocus = function () {
+        console.log('已经获取焦点');
+        this.value = "";
+    }
+    text.onblur = function () {
+        console.log('已失去焦点');
+        if (this.value == '') {
+            this.value = '输入姓名';
+        } else {
+            this.Style.color = "black"
+        }
+    }
+</script>-->
+</body>
+</html>

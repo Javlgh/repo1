@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>登录</title>
+
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<!-- Font Awesome -->
+	<!-- Ionicons -->
+	<!-- Theme style -->
+	<!-- iCheck -->
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<link rel="stylesheet" href="./plugins/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./plugins/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="./plugins/ionicons/css/ionicons.min.css">
+	<link rel="stylesheet" href="./plugins/adminLTE/css/AdminLTE.css">
+	<link rel="stylesheet" href="./plugins/iCheck/square/blue.css">
+
+</head>
+
+<body class="hold-transition login-page">
+<div class="login-box">
+	<div class="login-logo">
+
+		<a href="#"><b>毕业设计导师选择系统</b></a>
+
+	</div>
+	<!-- /.login-logo -->
+	<div class="login-box-body">
+		<p class="login-box-msg">登录系统
+		</p>
+
+		<span id="spanMsg"></span>
+		<form action="" id="login_form">
+			<div class="form-group has-feedback">
+				<input type="text" name="username" id="username" class="form-control" placeholder="用户名">
+				<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<input type="password" name="login_pwd" id="login_pwd" class="form-control" placeholder="密码">
+				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+			</div>
+			<div class="row">
+				<div class="col-xs-8">
+						<input type="radio" name="shenfen" value="admin" id="admin">&nbsp; 管理员&nbsp;
+						<input type="radio" name="shenfen" value="student" id="student" >&nbsp;学生&nbsp;
+						<input type="radio" name="shenfen" value="teacher" id="teacher">&nbsp;老师&nbsp;<br><br><br>
+					<span style="color: #ef1414">*账号:学号 密码:888888</span>
+				</div>
+				<!-- /.col -->
+				<div class="col-xs-4">
+					<input type="button" value="登录" id="sub" class="btn btn-primary btn-block btn-flat"/>
+				</div>
+				<!-- /.col -->
+			</div>
+		</form>
+		<div align="center" id="tsdiv"></div>
+	</div>
+	<!-- /.login-box-body -->
+
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 2.2.3 -->
+<!-- Bootstrap 3.3.6 -->
+<!-- iCheck -->
+<script src="./plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="./plugins/iCheck/icheck.min.js"></script>
+<script>
+	$(function () {
+		$("input#username").blur(function () {
+			$("div#tsdiv").html("")
+		})
+		$("input[type='radio']").on("click",function () {
+			if($("input[id='admin']:checked").val()=="admin"){
+				$("div#tsdiv").html("")
+				$("#sub").click(function(){
+					let tutorId=$("#username").val()
+					let pwd=$("#login_pwd").val()
+					if($("input#admin").prop('checked')) {
+						$.ajax({
+							url: "admin/login?tutorName=" + tutorId + "&pwd=" + pwd,
+							dataType: "json",
+							type: "get",
+							success: function (data) {
+								if (data.message == "操作成功") {
+									alert("登录成功")
+									window.location.href="administrators.html";
+								}else {
+									$("div#tsdiv").html("密码错误或账号错误")
+								}
+							}
+						})
+					}
+
+				});
+			}
+		});
+		$("input[type='radio']").on("click",function () {
+			if ($("input[id='student']:checked").val() == "student") {
+				$("div#tsdiv").html("")
+				$("#sub").click(function () {
+					let studentId = $("#username").val()
+					let pwd = $("#login_pwd").val()
+					if($("input#student").prop('checked')) {
+						$.ajax({
+							url: "student/login?studentId=" + studentId + "&pwd=" + pwd,
+							dataType: "json",
+							type: "get",
+							success: function (data) {
+								if (data.message == "操作成功") {
+									alert("登录成功")
+									window.location.href="/student/studentStart";
+								}else {
+									$("div#tsdiv").html("密码错误或账号错误")
+								}
+							}
+						})
+					}
+
+				});
+			}
+		})
+
+		$("input[type='radio']").on("click",function () {
+			if ($("input[id='teacher']:checked").val() == "teacher") {
+				$("div#tsdiv").html("")
+				$("#sub").click(function () {
+					let spanMsg = $("#spanMsg").val()
+					let tutorName = $("#username").val()
+					let pwd = $("#login_pwd").val()
+					if($("input#teacher").prop('checked')) {
+						$.ajax({
+							url: "tutor/tutorLogin?tutorName=" + tutorName + "&pwd=" + pwd,
+							dataType: "json",
+							type: "get",
+							success: function (data) {
+								if (data.message == "操作成功") {
+									window.location.href="teacher.html"
+									alert("登录成功")
+								}else {
+									$("div#tsdiv").html("密码错误或账号错误")
+								}
+							}
+						})
+					}
+				});
+			}
+		})
+	})
+
+</script>
+</body>
+
+</html>

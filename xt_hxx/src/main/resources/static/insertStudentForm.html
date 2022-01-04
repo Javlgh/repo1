@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生选题系统</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #34b8ad;
+        }
+        .box{
+            border: 1px solid transparent;
+            border-radius: 3px;
+            width: 1600px;
+            background-color: white;
+            margin: 100px auto;
+        }
+        .table{
+            border: 1px solid black;
+            border-radius: 3px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+            margin-top: 10px;
+            width: 500px;
+            text-align: center;
+            height: 400px;
+
+        }
+        .table th,td{
+            border: 1px solid black;
+
+        }
+        .table tr:hover{
+            background-color: #e5e4e2;
+        }
+        .table a{
+            display: inline-block;
+            width: 50px;
+            height: 20px;
+            background-color: white;
+            border: 1px solid transparent;
+            border-radius: 5px;
+
+        }
+        .table a:hover{
+            background-color: #cce8ff;
+        }
+
+        .button a{
+            width: 140px;
+            height: 40px;
+            background-color: white;
+            display: inline-block;
+            text-decoration: none;
+            background-color: #9da0a0;
+            color: black;
+            line-height: 40px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            margin: 0 10px 10px 10px;
+        }
+        .button a:hover{
+            background-color: #ff6700;
+        }
+        .button{
+            text-align: center;
+        }
+        .table input{
+            height: 20px;
+            width: 300px;
+        }
+        .table .ge{
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+<form action="/admin/insertStudent">
+    <table class="table" cellspacing="0">
+        <tr>
+            <td>学院</td>
+            <td class="ge"><input type="text" name="college" ></td></tr>
+        <tr>
+            <td>原班主任</td>
+            <td><input type="text" name="oldTeacherClass"></td></tr>
+        <tr>
+            <td>现班主任</td>
+            <td><input type="text" name="classTeacherName"></td></tr>
+        <tr>
+            <td>专业</td>
+            <td><input type="text" name="major" ></td></tr>
+        <tr>
+            <td>原班级</td>
+            <td><input type="text" name="oldClass" ></td></tr>
+        <tr>
+            <td>现班级</td>
+            <td><input type="text" name="newClass" ></td></tr>
+        <tr><td>学生学号</td>
+            <td> <input type="text" name="studentId"></td></tr>
+        <tr><td>学生姓名</td>
+            <td><input type="text" name="studentName" ></td></tr>
+        <tr><td>性别</td>
+            <td><input type="text" name="studentSex" ></td></tr>
+        <tr><td>联系方式</td>
+            <td><input type="text" name="studentPhone" ></td></tr>
+        <tr><td>导员</td>
+            <td><input type="text" name="dy" ></td></tr>
+        <tr><td colspan="2"><input type="submit" value="添加" class="button"></td></tr>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+</form>
+</div>
+</body>
+</html>

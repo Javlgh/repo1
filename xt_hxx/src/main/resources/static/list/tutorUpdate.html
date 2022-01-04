@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>导师选择系统</title>
+    <style type="text/css">
+
+        body{
+            background-color: #34b8ad;
+        }
+        .box{
+            border: 1px solid transparent;
+            border-radius: 3px;
+            background-color: white;
+            margin: 100px auto;
+        }
+        .table{
+            border: 1px solid black;
+            border-radius: 3px;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+
+        }
+        .table th,td{
+            border: 1px solid black;
+
+        }
+        .button{
+            margin: 10px 0;
+            text-align: center;
+        }
+        .button {
+            width: 100px;
+            height: 20px;
+            background-color: white;
+            display: inline-block;
+            text-decoration: none;
+            background-color: white;
+            color: black;
+            line-height: 20px;
+            border: 1px solid cornflowerblue;
+            border-radius: 5px;
+
+        }
+        .button:hover{
+            background-color: cornflowerblue;
+        }
+        .table input{
+            border: 1px solid powderblue ;
+        }
+        .table input:hover{
+            border: 1px solid cornflowerblue ;
+        }
+        .table h3{
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+<form action="/tutor/tutorUpdate" method="get">
+    <table class="table" cellspacing="0">
+        <tr><th colspan="2">    <h3 th:text="${tutor.tutorName}"></h3></th></tr>
+        <tr>
+            <td>修改简介</td>
+            <td><input name="tutorText" th:value="${tutor.tutorText}"></td></tr>
+        <tr>
+            <td>修改密码</td>
+            <td><input name="tutorPwd" th:value="${tutor.tutorPwd}"></td></tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="修改" class="button"></td>
+            </tr>
+    </table>
+</form>
+</div>
+</body>
+</html>

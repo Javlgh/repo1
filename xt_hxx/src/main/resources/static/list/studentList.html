@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生选题系统</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #34b8ad;
+        }
+        .box{
+            border: 1px solid transparent;
+            border-radius: 3px;
+            width: 1600px;
+            background-color: white;
+            margin: 100px auto;
+        }
+        .table{
+            border: 1px solid black;
+            border-radius: 3px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+            margin-top: 10px;
+            width: 1500px;
+            text-align: center;
+
+        }
+        .table th,td{
+            border: 1px solid black;
+
+        }
+        .table tr:hover{
+            background-color: #e5e4e2;
+        }
+        .table a{
+            display: inline-block;
+            width: 50px;
+            height: 20px;
+            background-color: white;
+            border: 1px solid transparent;
+            border-radius: 5px;
+
+        }
+        .table a:hover{
+            background-color: #cce8ff;
+        }
+
+        .button a{
+            width: 140px;
+            height: 40px;
+            background-color: white;
+            display: inline-block;
+            text-decoration: none;
+            background-color: #9da0a0;
+            color: black;
+            line-height: 40px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            margin: 0 10px 10px 10px;
+        }
+        .button a:hover{
+            background-color: #ff6700;
+        }
+        .button{
+            text-align: center;
+        }
+        .biaodan{
+            font-size: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+         .biaoge{
+
+             width: 200px;
+             height: 30px;
+             border: 1px solid blue;
+             border-radius: 5px;
+
+        }
+        .biaoge:hover{
+
+        }
+        .anniu{
+            width: 100px;
+            height: 30px;
+        }
+        .anniu:hover{
+            background-color: cornflowerblue;
+        }
+    </style>
+    <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+
+    </script>
+</head>
+<body>
+
+
+<div class="box">
+<div class="biaodan">
+    <form action="/admin/studentLikeList">
+
+        根据学号查询&nbsp; <input type="text" name="studentId" id="studentId" th:value="${studentLike.studentId}" class="biaoge">&nbsp;根据姓名查询&nbsp;<input type="text"  name="studentName" id="studentName" th:value="${studentLike.studentName}"class="biaoge">&nbsp;<input type="submit" id="btn" value="提交" class="anniu" >
+    </form>
+</div>
+    <table class="table" cellspacing="0">
+        <tr><th>学生学号</th><th>学生姓名</th><th>性别</th><th>联系方式</th>
+            <th>专业</th><th>学院</th>
+            <th>现班主任</th><th>原班主任</th>
+            <th>导员</th><th>旧班级</th><th>新班级</th><th colspan="4">操作</th>
+        </tr>
+        <tr th:each="student:${studentList.data.list}">
+            <th th:text="${student.studentId}"></th>
+            <th th:text="${student.studentName}"></th>
+            <th th:text="${student.studentSex}"></th>
+            <th th:text="${student.studentPhone}"></th>
+            <th th:text="${student.major}"></th>
+            <th th:text="${student.college}"></th>
+            <th th:text="${student.classTeacherName}"></th>
+            <th th:text="${student.oldTeacherClass}"></th>
+            <th th:text="${student.dy}"></th>
+            <th th:text="${student.oldClass}"></th>
+            <th th:text="${student.newClass}"></th>
+            <th th:if="${student.pd}==1">待处理</th>
+            <th th:if="${student.pd}==0">未选</th>
+            <th ><a th:href="@{/admin/findStudentById(studentId=${student.studentId})}">修改</a></th>
+            <th th:if="${student.pd}!=1" ><a th:href="@{'/admin/deleteStudentById/'+${student.studentId}}" >删除</a></th>
+            <th  th:if="${student.pd}==1" ><a>删除</a></th>
+            <th ><a th:href="@{/insertStudentForm.html}">添加</a></th>
+        </tr>
+        <tr >
+            <td colspan="17" >
+
+                <a th:href="@{/admin/studentLikeList(pageNum=1,pageSize=15,studentId=${studentLike.studentId},studentName=${studentLike.studentName})}">首页</a>
+                <a th:href="@{/admin/studentLikeList(pageNum=${studentList.data.pageNum}-1,pageSize=15,studentId=${studentLike.studentId},studentName=${studentLike.studentName})}" th:if="${studentList.data.pageNum gt 0}">上一页</a>
+                <a th:href="@{/admin/studentLikeList(pageNum=1,pageSize=15,studentId=${studentLike.studentId},studentName=${studentLike.studentName})}" th:if="${studentList.data.pageNum lt 0}">上一页</a>
+                <a th:href="@{/admin/studentLikeList(pageNum=${studentList.data.pageNum}+1,pageSize=15,studentId=${studentLike.studentId},studentName=${studentLike.studentName})}" th:if="${studentList.data.pageNum lt studentList.data.totalPage}">下一页</a>
+                <a th:href="@{/admin/studentLikeList(pageNum=${studentList.data.totalPage},pageSize=15,studentId=${studentLike.studentId},studentName=${studentLike.studentName})}" th:if="${studentList.data.pageNum ge studentList.data.totalPage}">下一页</a>
+                <a th:href="@{/admin/studentLikeList(pageNum=${studentList.data.totalPage},pageSize=15,studentId=${studentLike.studentId},studentName=${studentLike.studentName})}">尾页</a>
+                第[[${studentList.data.pageNum}]]页/共[[${studentList.data.totalPage}]]页，共[[${studentList.data.total}]]条
+            </td>
+        </tr>
+    </table>
+    <div class="button">
+        <a th:href="@{/importExcelStudent.html}">一键导入学生信息</a><a th:href="@{/admin/excel/studentExcel}">一键导出学生信息</a>
+    </div>
+
+</div>
+
+</body>
+</html>

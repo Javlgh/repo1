@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>教师姓名：</div><div th:text="${tutor.tutorName}"></div>
+<div>教师简介：</div><div th:text="${tutor.tutorText}"></div>
+<div><a href="/student/stuTutorList?junt=1&pageSize=12">返回上一级</a></div>
+</body>
+</html>
